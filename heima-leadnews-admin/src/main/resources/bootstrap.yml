@@ -15,11 +15,11 @@ spring:
     url: jdbc:mysql://192.168.31.132:3306/leadnews_admin?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
     username: root
     password: root
-mybatis:
-  mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.heima.model.admin.pojos
-pagehelper:
-  helperDialect: mysql
-  reasonable: true
-  supportMethodsArguments: true
-  params: count=countSql
+#mybatis:
+#  mapper-locations: classpath:mapper/*.xml
+#  type-aliases-package: com.heima.model.admin.pojos
+#pagehelper:
+#  helperDialect: mysql
+#  reasonable: true
+#  supportMethodsArguments: true
+#  params: count=countSql

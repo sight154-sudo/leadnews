@@ -10,16 +10,16 @@ spring:
       config:
         server-addr: 192.168.31.132:8848 #配置nacos配置中心
         file-extension: yml #配置文件的格式
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.31.132:3306/leadnews_article?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
-    username: root
-    password: root
-mybatis:
-  mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.heima.model.article.pojos
-pagehelper:
-  helperDialect: mysql
-  reasonable: true
-  supportMethodsArguments: true
-  params: count=countSql
+#  datasource:
+#    driver-class-name: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://192.168.31.132:3306/leadnews_article?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
+#    username: root
+#    password: root
+#mybatis:
+#  mapper-locations: classpath:mapper/*.xml
+#  type-aliases-package: com.heima.model.article.pojos
+#pagehelper:
+#  helperDialect: mysql
+#  reasonable: true
+#  supportMethodsArguments: true
+#  params: count=countSql
