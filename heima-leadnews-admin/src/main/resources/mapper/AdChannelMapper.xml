@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heima.admin.mapper.AdChannelMapper">
+    <resultMap id="BaseResultMap" type="com.heima.model.admin.pojos.AdChannel">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="createTime" column="createTime"/>
+        <result property="description" column="description"/>
+        <result property="isDefault" column="is_default" javaType="java.lang.Boolean"/>
+        <result property="status" column="status" javaType="java.lang.Boolean"/>
+        <result property="ord" column="ord"/>
+    </resultMap>
+    <sql id="BaseResult">
+--         id,name,description,if(is_default=1,true,false) isDefault,if(status=1,true,false) status,ord,created_time createTime
+        id,name,description,is_default isDefault,status status,ord,created_time createTime
+    </sql>
+    <insert id="save" parameterType="com.heima.model.admin.pojos.AdChannel">
+        insert into ad_channel(id,name,description,is_default,status,ord,created_time)
+        values(#{id},#{name},#{description},#{isDefault},#{status},#{ord},#{createTime})
+    </insert>
+    <update id="update" parameterType="com.heima.model.admin.pojos.AdChannel">
+        update ad_channel
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="isDefault != null">
+                is_default = #{isDefault},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="ord != null">
+                ord = #{ord},
+            </if>
+            <if test="createTime != null">
+                created_time = #{createTime},
+            </if>
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+    <select id="findAll" parameterType="java.lang.String" resultType="com.heima.model.admin.pojos.AdChannel">
+        select
+        <include refid="BaseResult"/>
+        from ad_channel
+        <where>
+            <if test=" name != null and name != ''">
+                name like '%${name}%'
+            </if>
+        </where>
+    </select>
+</mapper>

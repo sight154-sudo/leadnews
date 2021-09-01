@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heima.user.mapper.ApUserRealnameMapper">
+    <sql id="BaseResult">
+        id,
+        user_id userId,
+        name,
+        idno,
+        font_image fontImage,
+        back_image backImage,
+        hold_image holdImage,
+        live_image liveImage,
+        status,
+        reason,
+        created_time createdTime,
+        submited_time submitedTime,
+        updated_time updatedTime
+    </sql>
+    <select id="findAll" parameterType="java.lang.Integer" resultType="com.heima.model.user.pojos.ApUserRealname">
+        select
+        <include refid="BaseResult"/>
+        from ap_user_realname
+        <where>
+            <if test="status != null">
+                status = #{status}
+            </if>
+        </where>
+    </select>
+    <select id="findById" resultType="com.heima.model.user.pojos.ApUserRealname">
+        select
+        <include refid="BaseResult"/>
+        from ap_user_realname
+        <where>
+            id = #{id}
+        </where>
+    </select>
+
+
+</mapper>

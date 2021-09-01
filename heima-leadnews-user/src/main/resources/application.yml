@@ -1,0 +1,9 @@
+server:
+  port: 9002
+spring:
+  application:
+    name: leadnews-user
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.31.132:8848
