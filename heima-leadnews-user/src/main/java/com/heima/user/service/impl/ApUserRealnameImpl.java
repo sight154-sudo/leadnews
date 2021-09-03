@@ -1,6 +1,7 @@
 package com.heima.user.service.impl;
 
 import cn.hutool.core.convert.Convert;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -18,8 +19,10 @@ import com.heima.user.feign.WemediaFeign;
 import com.heima.user.mapper.ApUserMapper;
 import com.heima.user.mapper.ApUserRealnameMapper;
 import com.heima.user.service.ApUserRealnameService;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -62,6 +65,8 @@ public class ApUserRealnameImpl implements ApUserRealnameService {
     }
 
 
+    @GlobalTransactional
+    @Transactional
     @Override
     public ResponseResult updateStatusById(AuthDto dto,Short status) {
         //参数校验
@@ -84,9 +89,10 @@ public class ApUserRealnameImpl implements ApUserRealnameService {
             //认证通过后添加自媒体信息到数据库中
             ResponseResult result = createWmUserAndArticle(apUserRealname.getUserId());
             if (result == null) {
-                return ResponseResult.errorResult(AppHttpCodeEnum.SAVE_FAILED);
+                return ResponseResult.errorResult(AppHttpCodeEnum.FAILED);
             }
         }
+        int i = 1/0;
         return ResponseResult.setAppHttpCodeEnum(AppHttpCodeEnum.SUCCESS);
     }
 
@@ -126,7 +132,6 @@ public class ApUserRealnameImpl implements ApUserRealnameService {
         ApAuthor apAuthor = articleFeign.findByUserId(apUser.getId());
         if (ObjectUtil.isEmpty(apAuthor)) {
             apAuthor = new ApAuthor();
-            apAuthor.setCreatedTime(new Date());
             apAuthor.setName(apUser.getName());
             apAuthor.setUserId(apUser.getId());
             apAuthor.setType(AdminConstans.WEMEDIAPEOPLE);

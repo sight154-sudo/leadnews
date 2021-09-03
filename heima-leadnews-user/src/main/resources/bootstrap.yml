@@ -10,6 +10,9 @@ spring:
       config:
         server-addr: 192.168.31.132:8848 #配置nacos配置中心
         file-extension: yml #配置文件的格式
+    alibaba:
+      seata:
+        tx-service-group: ${spring.application.name}_tx_group
 #  datasource:
 #    driver-class-name: com.mysql.jdbc.Driver
 #    url: jdbc:mysql://192.168.31.132:3306/leadnews_user?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false

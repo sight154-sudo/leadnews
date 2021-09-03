@@ -36,7 +36,7 @@ public class ArticleServiceImpl implements ArticleService {
         if(ObjectUtil.isEmpty(apAuthor)){
             return ResponseResult.errorResult(AppHttpCodeEnum.PARAM_INVALID);
         }
-        apAuthor.setCreatedTime(new Date());
+//        apAuthor.setCreatedTime(new Date());
         int res = articleMapper.save(apAuthor);
         return res>0?ResponseResult.setAppHttpCodeEnum(AppHttpCodeEnum.SUCCESS):ResponseResult.errorResult(AppHttpCodeEnum.SAVE_FAILED);
     }

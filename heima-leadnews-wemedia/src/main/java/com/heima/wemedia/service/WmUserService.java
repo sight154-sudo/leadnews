@@ -1,6 +1,8 @@
 package com.heima.wemedia.service;
 
+import com.heima.model.admin.dtos.AdUserDto;
 import com.heima.model.common.dtos.ResponseResult;
+import com.heima.model.wemedia.dtos.WmUserDto;
 import com.heima.model.wemedia.pojos.WmUser;
 
 /**
@@ -23,4 +25,11 @@ public interface WmUserService {
      * @return
      */
     WmUser findByName(String name);
+
+    /**
+     * 用户登陆
+     * @param dto
+     * @return
+     */
+    ResponseResult login(WmUserDto dto);
 }
