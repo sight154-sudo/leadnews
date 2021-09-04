@@ -1,6 +1,7 @@
 package com.heima.wemedia.service.impl;
 
 import cn.hutool.core.convert.Convert;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.heima.common.exception.SystemException;
@@ -14,6 +15,7 @@ import com.heima.wemedia.mapper.WmUserMapper;
 import com.heima.wemedia.service.WmUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import java.util.Date;
@@ -55,7 +57,6 @@ public class WmUserServiceImpl implements WmUserService {
                 wmUser.setSalt("");
                 map.put("user",wmUser);
                 map.put("token",token);
-
                 return ResponseResult.okResult(map);
             }else{
                 throw new SystemException("token生成失败");
@@ -65,13 +66,15 @@ public class WmUserServiceImpl implements WmUserService {
     }
 
     @Override
+    @Transactional
     public ResponseResult save(WmUser wmUser) {
         if(ObjectUtil.isEmpty(wmUser)){
             return ResponseResult.errorResult(AppHttpCodeEnum.PARAM_INVALID);
         }
-        wmUser.setCreated_time(new Date());
+        wmUser.setCreatedTime(DateUtil.now());
         int res = wmUserMapper.save(wmUser);
-        return res>0?ResponseResult.setAppHttpCodeEnum(AppHttpCodeEnum.SUCCESS):ResponseResult.errorResult(AppHttpCodeEnum.SAVE_FAILED);
+//        int i = 1/0;
+        return res!=0?ResponseResult.setAppHttpCodeEnum(AppHttpCodeEnum.SUCCESS):ResponseResult.errorResult(AppHttpCodeEnum.SAVE_FAILED);
     }
 
     @Override

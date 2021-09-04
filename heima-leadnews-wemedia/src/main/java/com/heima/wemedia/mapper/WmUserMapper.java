@@ -27,9 +27,10 @@ public interface WmUserMapper {
 
     /**
      * 根据用户名查询用户信息
+     *
      * @param name
      * @return
      */
-    @Select("select id,name,password,salt,nickname,image,phone,status,email,login_time LoginTime,created_time createdTime from ad_user where name = #{name}")
+    @Select("select id,name,password,salt,nickname,image,phone,status,email,login_time LoginTime,created_time createdTime from wm_user where name = #{name}")
     WmUser findUserByName(String name);
 }

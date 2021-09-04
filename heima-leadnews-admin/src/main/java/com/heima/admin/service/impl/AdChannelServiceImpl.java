@@ -100,4 +100,10 @@ public class AdChannelServiceImpl implements AdChannelService {
             throw new BusinessException("删除频道信息失败");
         }
     }
+
+    @Override
+    public ResponseResult findAll() {
+        List<AdChannel> list = adChannelMapper.findAll(null);
+        return ResponseResult.okResult(list);
+    }
 }

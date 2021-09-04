@@ -32,5 +32,5 @@ public class WmMaterial implements Serializable {
     /**
      * 创建时间
      */
-    private Date createdTime;
+    private String createdTime;
 }

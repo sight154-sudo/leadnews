@@ -15,6 +15,7 @@
         <module>heima-leadnews-wemedia</module>
         <module>heima-leadnews-article</module>
         <module>heima-leadnews-seata</module>
+        <module>heima-leadnews-wemedia-gateway</module>
     </modules>
     <!-- 继承Spring boot工程 -->
     <parent>
@@ -341,11 +342,11 @@
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${swagger.version}</version>
             </dependency>
-            <dependency>
+            <!--<dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis.plus.version}</version>
-            </dependency>
+            </dependency>-->
             <!-- xxl-job -->
             <dependency>
                 <groupId>com.xuxueli</groupId>
@@ -368,6 +369,12 @@
                             </goals>
                         </execution>
                     </executions>
+                </plugin>
+                <!--在这里修改版本-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.1.0</version>
                 </plugin>
             </plugins>
         </pluginManagement>

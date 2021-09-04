@@ -22,10 +22,7 @@
     </sql>
 
     <insert id="save" parameterType="com.heima.model.wemedia.pojos.WmUser">
-        <selectKey order="AFTER" keyProperty="id" keyColumn="id" resultType="java.lang.Integer">
-            select LAST_INSERT_ID()
-        </selectKey>
         insert into wm_user(id,ap_user_id,ap_author_id,name,password,salt,nickname,image,location,phone,status,email,type,score,login_time,created_time)
-        values(#{id},#{apUserId},#{apAuthorId},#{name},#{password},#{salt},#{nickname},#{image},#{location},#{phone},#{status},#{email},#{type},#{score},#{login_time},#{created_time})
+        values(#{id},#{apUserId},#{apAuthorId},#{name},#{password},#{salt},#{nickname},#{image},#{location},#{phone},#{status},#{email},#{type},#{score},#{loginTime},#{createdTime})
     </insert>
 </mapper>

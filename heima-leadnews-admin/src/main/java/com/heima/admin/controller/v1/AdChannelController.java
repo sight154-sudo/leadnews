@@ -44,4 +44,10 @@ public class AdChannelController implements AdChannelControllerApi {
     public ResponseResult deleteChannel(@PathVariable Integer id) {
         return adChannelService.delete(id);
     }
+
+    @GetMapping("channels")
+    @Override
+    public ResponseResult findAll() {
+        return adChannelService.findAll();
+    }
 }

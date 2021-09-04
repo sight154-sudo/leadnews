@@ -1,4 +1,4 @@
-package com.heima.common.config;
+package com.heima.common.fastdfs;
 
 import com.github.tobato.fastdfs.FdfsClientConfig;
 import org.springframework.context.annotation.Configuration;

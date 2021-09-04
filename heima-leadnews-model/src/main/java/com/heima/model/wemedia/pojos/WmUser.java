@@ -68,9 +68,9 @@ public class WmUser implements Serializable {
     /**
      *最后一次登陆时间
      */
-    private Date login_time;
+    private String loginTime;
     /**
      *创建时间
      */
-    private Date created_time;
+    private String createdTime;
 }

@@ -23,8 +23,8 @@ public interface ArticleMapper {
      * @param apAuthor
      * @return
      */
-    @Insert("insert into ap_author(id,name,type,user_id,created_time,wm_user_id) values(#{id},#{name},#{type},#{userId},#{createdTime},#{wmUserId})")
-    @Options(useGeneratedKeys = true,keyProperty = "id")
+    @Insert("insert into ap_author(id,name,type,user_id,created_time,wm_user_id) values(null,#{name},#{type},#{userId},#{createdTime},#{wmUserId})")
+    /*@Options(useGeneratedKeys = true,keyProperty = "id")*/
     int save(ApAuthor apAuthor);
 
     /**

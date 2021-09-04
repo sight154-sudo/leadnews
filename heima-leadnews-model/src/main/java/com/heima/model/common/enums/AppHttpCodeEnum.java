@@ -30,7 +30,8 @@ public enum AppHttpCodeEnum {
     UPDATE_FAILED(50002,"修改失败"),
     DELETE_FAILED(50003,"删除失败"),
     SERVER_ERROR(700001,"服务器内部错误"),
-    SYSTEM_ERROR(700002,"系统正在维护");
+    SYSTEM_ERROR(700002,"系统正在维护"),
+    UNAUTHORIZED(401, "Unauthorized"),;
 
 
     int code;

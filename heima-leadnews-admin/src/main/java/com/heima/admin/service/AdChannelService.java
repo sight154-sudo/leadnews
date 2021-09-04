@@ -38,4 +38,10 @@ public interface AdChannelService {
      * @return
      */
     ResponseResult delete(Integer id);
+
+    /**
+     * 根据所有频道信息
+     * @return
+     */
+    ResponseResult findAll();
 }

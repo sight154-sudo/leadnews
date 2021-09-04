@@ -1,5 +1,7 @@
 package com.heima.article.service.impl;
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.io.unit.DataUnit;
 import cn.hutool.core.util.ObjectUtil;
 import com.heima.article.mapper.ArticleMapper;
 import com.heima.article.service.ArticleService;
@@ -9,6 +11,7 @@ import com.heima.model.common.enums.AppHttpCodeEnum;
 import com.heima.model.wemedia.pojos.WmUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -32,13 +35,15 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @Transactional
     public ResponseResult save(ApAuthor apAuthor) {
         if(ObjectUtil.isEmpty(apAuthor)){
             return ResponseResult.errorResult(AppHttpCodeEnum.PARAM_INVALID);
         }
-//        apAuthor.setCreatedTime(new Date());
+        apAuthor.setCreatedTime(DateUtil.now());
         int res = articleMapper.save(apAuthor);
-        return res>0?ResponseResult.setAppHttpCodeEnum(AppHttpCodeEnum.SUCCESS):ResponseResult.errorResult(AppHttpCodeEnum.SAVE_FAILED);
+//        int i = 1/0;
+        return res!=0?ResponseResult.setAppHttpCodeEnum(AppHttpCodeEnum.SUCCESS):ResponseResult.errorResult(AppHttpCodeEnum.SAVE_FAILED);
     }
 
 }

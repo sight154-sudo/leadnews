@@ -65,9 +65,9 @@ public class ApUserRealnameImpl implements ApUserRealnameService {
     }
 
 
+    @Override
     @GlobalTransactional
     @Transactional
-    @Override
     public ResponseResult updateStatusById(AuthDto dto,Short status) {
         //参数校验
         if (!ObjectUtil.isAllNotEmpty(dto, dto.getId())) {
@@ -92,10 +92,9 @@ public class ApUserRealnameImpl implements ApUserRealnameService {
                 return ResponseResult.errorResult(AppHttpCodeEnum.FAILED);
             }
         }
-        int i = 1/0;
+//        int i = 1/0;
         return ResponseResult.setAppHttpCodeEnum(AppHttpCodeEnum.SUCCESS);
     }
-
     /**
      * 保存自媒体用户信息和作者信息
      *
@@ -121,6 +120,7 @@ public class ApUserRealnameImpl implements ApUserRealnameService {
         apUserMapper.updateUserStatus(apUser);
         return ResponseResult.setAppHttpCodeEnum(AppHttpCodeEnum.SUCCESS);
     }
+
 
     /**
      * 保存文章作者信息
@@ -148,7 +148,6 @@ public class ApUserRealnameImpl implements ApUserRealnameService {
         WmUser wmUser = wemediaFeign.findByName(apUser.getName());
         if (ObjectUtil.isEmpty(wmUser)) {
             wmUser = new WmUser();
-            wmUser.setCreated_time(new Date());
             wmUser.setName(apUser.getName());
             wmUser.setSalt(apUser.getSalt());
             wmUser.setPassword(apUser.getPassword());

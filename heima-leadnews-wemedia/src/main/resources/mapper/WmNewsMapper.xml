@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heima.wemedia.mapper.WmNewsMapper">
+    <sql id="BaseRes">
+          id,
+          user_id userId,
+          title,
+          content,
+          type,
+          channel_id channelId,
+          labels,
+          created_time  createdTime,
+          submited_time submitedTime,
+          status,
+          reason,
+          article_id articelId,
+          images,
+          enable
+    </sql>
+    <insert id="save" parameterType="com.heima.model.wemedia.pojos.WmNews" useGeneratedKeys="true" keyProperty="id">
+        insert into wm_news(id,user_id,title,content,type,channel_id,labels,created_time,
+                            submited_time,status,publish_time,reason,article_id,images)
+        values(null,#{userId},#{title},#{content},#{type},#{channelId},#{labels},#{createdTime},
+               #{submitedTime},#{status},#{publishTime},#{reason},#{articleId},#{images})
+
+
+    </insert>
+    <select id="findAll" parameterType="com.heima.model.wemedia.dtos.WmNewsDto" resultType="com.heima.model.wemedia.pojos.WmNews">
+        select
+        <include refid="BaseRes"/>
+        from wm_news
+        <where>
+            <if test="keyword != null and keyword != ''">
+                and title like '%${keyword}%'
+            </if>
+            <if test="channelId != null">
+                and channel_id = #{channelId}
+            </if>
+            <if test="beginPubDate != null and endPubDate != null">
+                and publish_time between #{beginPubDate} and #{endPubDate}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+        </where>
+        order by publish_time desc
+    </select>
+</mapper>
