@@ -40,4 +40,6 @@ public class WemediaContans {
      * 提交审核
      */
     public static final Short WM_COVER_REFERENCE = 1;
+
+    public static final Short WM_ALREADY_PUBLISHED = 9;
 }

@@ -25,6 +25,51 @@
 
 
     </insert>
+    <update id="update" parameterType="com.heima.model.wemedia.pojos.WmNews">
+        update wm_news
+        <set>
+            <if test=" userId != null">
+                user_id = #{userId},
+            </if>
+            <if test=" title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test=" content != null and content != ''">
+                content = #{content},
+            </if>
+            <if test=" type != null">
+                type = #{type},
+            </if>
+            <if test=" channelId != null">
+                channel_id = #{channelId},
+            </if>
+            <if test=" labels != null">
+                labels = #{labels},
+            </if>
+            <if test=" createdTime != null">
+                created_time = #{createdTime},
+            </if>
+            <if test=" submitedTime != null">
+                submited_time = #{submitedTime},
+            </if>
+            <if test=" status != null">
+                status = #{status},
+            </if>
+            <if test=" publishTime != null">
+                publish_time = #{publishTime},
+            </if>
+            <if test=" reason != null">
+                reason = #{reason},
+            </if>
+            <if test=" articleId != null">
+                article_id = #{articleId},
+            </if>
+            <if test=" images != null">
+                images = #{images},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
     <select id="findAll" parameterType="com.heima.model.wemedia.dtos.WmNewsDto" resultType="com.heima.model.wemedia.pojos.WmNews">
         select
         <include refid="BaseRes"/>

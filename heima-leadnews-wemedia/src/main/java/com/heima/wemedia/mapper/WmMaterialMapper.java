@@ -2,10 +2,7 @@ package com.heima.wemedia.mapper;
 
 import com.heima.model.wemedia.dtos.WmMaterialDto;
 import com.heima.model.wemedia.pojos.WmMaterial;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -73,4 +70,12 @@ public interface WmMaterialMapper {
     @Select("select id,user_id userId,url,type,is_collection isCollection,created_time createdTime" +
             " from wm_material where id = #{id}")
     WmMaterial findById(Integer id);
+
+    /**
+     * 根据素材url查询所有
+     * @param userId
+     * @param url
+     * @return
+     */
+    List<WmMaterial> findAllByUrl(@Param("userId") Integer userId,@Param("urls") List<String> url);
 }

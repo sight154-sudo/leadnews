@@ -15,6 +15,8 @@ import java.util.List;
 @ApiModel("内容列表搜索条件")
 public class WmNewsDto{
 
+
+    private Integer id;
     /**
      *自媒体用户id
      */

@@ -24,4 +24,25 @@ public interface WmNewsService {
      * @return
      */
     public ResponseResult submitNews(WmNewsDto dto);
+
+    /**
+     * 根据文章id查询详情信息
+     * @param newsId
+     * @return
+     */
+    ResponseResult findOne(Integer newsId);
+
+    /**
+     * 根据id删除文章
+     * @param newsId
+     * @return
+     */
+    ResponseResult deleteOne(Integer newsId);
+
+    /**
+     * 文章的上下架
+     * @param dto
+     * @return
+     */
+    ResponseResult downOrUp(WmNewsDto dto);
 }

@@ -22,4 +22,13 @@
         </where>
         order by created_time desc
     </select>
+    <select id="findAllByUrl" resultType="com.heima.model.wemedia.pojos.WmMaterial">
+        select
+        <include refid="BaseRes"/>
+        from wm_material
+        where 1 = 1 and user_id = #{userId} and url in
+        <foreach collection="urls" separator="," open="(" close=")" item="url">
+            #{url}
+        </foreach>
+    </select>
 </mapper>

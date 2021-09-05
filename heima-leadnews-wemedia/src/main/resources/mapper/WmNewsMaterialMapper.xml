@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heima.wemedia.mapper.WmNewsMaterialMapper">
+    <insert id="saveBatch">
+        insert into wm_news_material(id,material_id,news_id,type,ord)
+        values
+        <foreach collection="materialIds" item="materialId" separator=",">
+            (null,#{materialId},#{newsId},#{type},null)
+        </foreach>
+    </insert>
+    <delete id="deleteBatch">
+        delete from wm_news_material where 1 = 1
+        <if test="newsId != null">
+            and news_id = #{newsId}
+        </if>
+        <if test=" type != null">
+            and type = #{type}
+        </if>
+    </delete>
+</mapper>
