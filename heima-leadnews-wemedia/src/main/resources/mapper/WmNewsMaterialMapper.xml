@@ -13,8 +13,5 @@
         <if test="newsId != null">
             and news_id = #{newsId}
         </if>
-        <if test=" type != null">
-            and type = #{type}
-        </if>
     </delete>
 </mapper>

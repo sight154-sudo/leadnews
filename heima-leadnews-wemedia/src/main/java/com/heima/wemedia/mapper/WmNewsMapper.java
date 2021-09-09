@@ -1,5 +1,6 @@
 package com.heima.wemedia.mapper;
 
+import com.heima.model.common.dtos.ResponseResult;
 import com.heima.model.wemedia.dtos.WmNewsDto;
 import com.heima.model.wemedia.dtos.WmNewsPageReqDto;
 import com.heima.model.wemedia.pojos.WmNews;
@@ -60,4 +61,21 @@ public interface WmNewsMapper {
      */
     @Update("update wm_news set enable = #{enable} where id = #{id}")
     void updateEnableById(Integer id, Boolean enable);
+
+    /**
+     * 修改文章状态信息
+     * @param wmNews
+     * @return
+     */
+    @Update("<script>update wm_news \n" +
+            "        <set>\n" +
+            "            <if test=\"status != null\">\n" +
+            "                status = #{status},\n" +
+            "            </if>\n" +
+            "            <if test=\"reason != null and reason != ''\">\n" +
+            "                reason = #{reason}\n" +
+            "            </if>\n" +
+            "        </set>\n" +
+            "        where id = #{id}</script>")
+    int updateWmNewsStatus(WmNews wmNews);
 }

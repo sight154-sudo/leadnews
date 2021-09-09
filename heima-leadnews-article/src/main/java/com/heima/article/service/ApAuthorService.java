@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @date: Create in 22:15 2021/8/30
  * @description:
  */
-public interface ArticleService {
+public interface ApAuthorService {
     /**
      *根据用户id查询作者信息
      * @param id
@@ -24,4 +24,11 @@ public interface ArticleService {
      * @return
      */
     ResponseResult save(ApAuthor apAuthor);
+
+    /**
+     * 通过name查询文章作者信息
+     * @param name
+     * @return
+     */
+    ApAuthor findByName(String name);
 }

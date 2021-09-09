@@ -3,6 +3,7 @@ package com.heima.model.wemedia.dtos;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -44,11 +45,11 @@ public class WmNewsDto{
     /**
      *创建时间
      */
-    private String createdTime;
+    private Date createdTime;
     /**
      *提交时间
      */
-    private String submitedTime;
+    private Date submitedTime;
     /**
      *当前状态  0 草稿   1提交（待审核） 2 审核失败  3人工审核   4人工审核通过  8 审核通过（待发布）   9 已发布
      */
@@ -56,7 +57,7 @@ public class WmNewsDto{
     /**
      *定时发布的时间
      */
-    private String publishTime;
+    private Date publishTime;
     /**
      * 拒绝理由
      */

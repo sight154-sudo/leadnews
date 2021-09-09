@@ -59,7 +59,7 @@ public class WmMaterialServiceImpl implements WmMaterialService {
             WmMaterial wmMaterial = new WmMaterial();
             wmMaterial.setUrl(url);
             wmMaterial.setUserId(wmUser.getId());
-            wmMaterial.setCreatedTime(DateUtil.now());
+            wmMaterial.setCreatedTime(new Date());
             wmMaterial.setIsCollection(false);
             wmMaterial.setType(0);
             res = wmMaterialMapper.save(wmMaterial);

@@ -9,6 +9,7 @@ import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.heima.common.constants.message.NewsAutoScanConstants;
 import com.heima.common.constants.wemedia.WemediaContans;
 import com.heima.model.common.dtos.PageResponseResult;
 import com.heima.model.common.dtos.ResponseResult;
@@ -27,10 +28,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -55,6 +58,10 @@ public class WmNewsServiceImpl implements WmNewsService {
 
     @Value("${fdfs.url}")
     private String prefixUrl;
+
+    @Autowired
+    private KafkaTemplate<String,String> kafkaTemplate;
+
     /**
      * 条件查询文章列表
      * @param dto
@@ -126,8 +133,10 @@ public class WmNewsServiceImpl implements WmNewsService {
         if(result!=null){
             return result;
         }
+        //调用kafka进行自动审核
         return ResponseResult.setAppHttpCodeEnum(AppHttpCodeEnum.SUCCESS);
     }
+
 
     /**
      * 保存文章信息
@@ -138,18 +147,29 @@ public class WmNewsServiceImpl implements WmNewsService {
     private int saveOrUpdateWmNews(WmNewsDto dto, WmNews wmNews) {
         String url = getString(dto);
         if(null == dto.getId()){
-            wmNews.setCreatedTime(DateUtil.now());
+            wmNews.setCreatedTime(new Date());
         }
         //TODO  提交时间
-        wmNews.setSubmitedTime(DateUtil.now());
+        wmNews.setSubmitedTime(new Date());
         wmNews.setImages(url);
         wmNews.setType(dto.getType());
-        if(wmNews.getPublishTime().contains("T")){
+        wmNews.setEnable(false);
+       /* if(wmNews.getPublishTime().contains("T")){
             wmNews.setPublishTime(DateUtil.parseUTC(wmNews.getPublishTime()).toString("yyyy-MM-dd HH:mm:ss"));
         }else{
             wmNews.setPublishTime(DateUtil.parse(wmNews.getPublishTime()).toString("yyyy-MM-dd HH:mm:ss"));
+        }*/
+        int res = 0;
+        if(null == dto.getId()){
+            res = wmNewsMapper.save(wmNews);
+        }else{
+            //删除素材的引用关系
+            wmNewsMaterialMapper.deleteById(wmNews.getId());
+            res = wmNewsMapper.update(wmNews);
         }
-        int res = null == dto.getId()?wmNewsMapper.save(wmNews):wmNewsMapper.update(wmNews);
+        if(res != 0){
+            kafkaTemplate.send(NewsAutoScanConstants.WM_NEWS_AUTO_SCAN_TOPIC,String.valueOf(wmNews.getId()));
+        }
         return res;
     }
 
@@ -160,7 +180,6 @@ public class WmNewsServiceImpl implements WmNewsService {
      * @param type
      */
     private void handlerWmNewsMaterial(Integer newsId, List<Object> materialIds,short type) {
-        wmNewsMaterialMapper.deleteBatch(newsId,type);
         wmNewsMaterialMapper.saveBatch(newsId,materialIds,type);
     }
     /**
@@ -363,5 +382,30 @@ public class WmNewsServiceImpl implements WmNewsService {
         }
         wmNewsMapper.updateEnableById(dto.getId(),dto.getEnable());
         return ResponseResult.setAppHttpCodeEnum(AppHttpCodeEnum.SUCCESS);
+    }
+
+    /**
+     * 修改文章状态信息
+     * @param wmNews
+     * @return
+     */
+    @Transactional
+    @Override
+    public ResponseResult updateWmNewsStatus(WmNews wmNews) {
+        if(ObjectUtil.isEmpty(wmNews)){
+            return ResponseResult.setAppHttpCodeEnum(AppHttpCodeEnum.PARAM_INVALID);
+        }
+        int res = wmNewsMapper.update(wmNews);
+        return res != 0?ResponseResult.setAppHttpCodeEnum(AppHttpCodeEnum.SUCCESS):ResponseResult.setAppHttpCodeEnum(AppHttpCodeEnum.FAILED);
+    }
+
+    /**
+     * 查询文章信息
+     * @param id
+     * @return
+     */
+    @Override
+    public WmNews findById(Integer id) {
+        return wmNewsMapper.findById(id);
     }
 }

@@ -3,6 +3,7 @@ package com.heima.wemedia;
 import com.heima.model.common.dtos.ResponseResult;
 import com.heima.model.wemedia.dtos.WmNewsDto;
 import com.heima.model.wemedia.dtos.WmNewsPageReqDto;
+import com.heima.model.wemedia.pojos.WmNews;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -53,4 +54,22 @@ public interface WmNewsControllerApi {
      */
     @ApiOperation("文章的上下架")
     public ResponseResult downOrUp(WmNewsDto dto);
+
+    /**
+     * 远程调用查询文章详情信息
+     * @param id
+     * @return
+     */
+    @ApiOperation("远程调用查询文章详情信息")
+    public WmNews findById(Integer id);
+
+    /**
+     * 远程修改文章状态信息
+     * @param wmNews
+     * @return
+     */
+    @ApiOperation("远程修改文章状态信息")
+    public ResponseResult updateWmNewsStatus(WmNews wmNews);
+
+
 }

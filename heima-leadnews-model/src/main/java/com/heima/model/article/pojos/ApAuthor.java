@@ -31,7 +31,7 @@ public class ApAuthor implements Serializable {
     /**
      *创建时间
      */
-    private String createdTime;
+    private Date createdTime;
     /**
      *自媒体账号
      */

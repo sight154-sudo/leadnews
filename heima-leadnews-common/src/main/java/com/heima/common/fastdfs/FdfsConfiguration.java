@@ -7,6 +7,6 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @Import(FdfsClientConfig.class) // 导入FastDFS-Client组件
-@PropertySource("fast_dfs.properties")
+@PropertySource("classpath:fast_dfs.properties")
 public class FdfsConfiguration {
 }

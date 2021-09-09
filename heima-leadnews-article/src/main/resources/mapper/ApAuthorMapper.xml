@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.heima.article.mapper.ArticleMapper">
+<mapper namespace="com.heima.article.mapper.ApAuthorMapper">
     <!--<insert id="save" parameterType="com.heima.model.article.pojos.ApAuthor">
         insert into ap_author(id,name,type,user_id,created_time,wm_user_id)
          values(#{id},#{name},#{type},#{userId},#{createdTime},#{wmUserId})

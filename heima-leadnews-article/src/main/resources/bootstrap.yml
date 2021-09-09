@@ -21,6 +21,8 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.heima.model.article.pojos
+  datacenter-id: 1
+  workerId: 1
 pagehelper:
   helperDialect: mysql
   reasonable: true

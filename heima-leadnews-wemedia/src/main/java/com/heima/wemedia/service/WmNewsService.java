@@ -45,4 +45,18 @@ public interface WmNewsService {
      * @return
      */
     ResponseResult downOrUp(WmNewsDto dto);
+
+    /**
+     * 修改文章状态
+     * @param wmNews
+     * @return
+     */
+    ResponseResult updateWmNewsStatus(WmNews wmNews);
+
+    /**
+     * 通过id查询自媒体文章信息
+     * @param id
+     * @return
+     */
+    WmNews findById(Integer id);
 }

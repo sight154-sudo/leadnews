@@ -29,20 +29,22 @@ public class WmTokenFilter extends GenericFilterBean {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
-        if(StringUtils.contains(req.getRequestURI(), "/login/in")){
+        /*if(StringUtils.contains(req.getRequestURI(), "/login/in")){
             filterChain.doFilter(req,resp);
             return;
-        }
+        }*/
         String token = req.getHeader("userId");
-        if(StrUtil.isEmpty(token)){
+        /*if(StrUtil.isEmpty(token)){
             //未获取到userId 则不放行
             resp.setStatus(401);
             return;
-        }
+        }*/
         //将登陆的用户信息存放到当前线程中
-        WmUser wmUser = new WmUser();
-        wmUser.setId(Convert.toInt(token));
-        WmThreadLocalUtils.set(wmUser);
+        if(StrUtil.isNotBlank(token)){
+            WmUser wmUser = new WmUser();
+            wmUser.setId(Convert.toInt(token));
+            WmThreadLocalUtils.set(wmUser);
+        }
         filterChain.doFilter(req,resp);
     }
 }

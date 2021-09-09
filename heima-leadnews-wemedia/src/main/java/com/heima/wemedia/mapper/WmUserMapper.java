@@ -1,6 +1,7 @@
 package com.heima.wemedia.mapper;
 
 import com.heima.model.wemedia.pojos.WmUser;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 /**
@@ -31,6 +32,14 @@ public interface WmUserMapper {
      * @param name
      * @return
      */
-    @Select("select id,name,password,salt,nickname,image,phone,status,email,login_time LoginTime,created_time createdTime from wm_user where name = #{name}")
+    @Select("select id,name,password,salt,nickname,image,phone,status,email,login_time loginTime,created_time createdTime from wm_user where name = #{name}")
     WmUser findUserByName(String name);
+
+    /**
+     * 通过自媒体用户信息
+     * @param id
+     * @return
+     */
+    @Select("select id,ap_user_id apUserId,ap_author_id apAuthorId,name,password,salt,nickname,image,location,phone,status,email,type,score,login_time loginTime,created_time createdTime from wm_user where id = #{id}")
+    WmUser findById(@Param("id") Integer id);
 }

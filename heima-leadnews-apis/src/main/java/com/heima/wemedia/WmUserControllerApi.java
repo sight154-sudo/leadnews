@@ -4,6 +4,8 @@ import com.heima.model.common.dtos.ResponseResult;
 import com.heima.model.wemedia.pojos.WmUser;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  * @author: tang
@@ -28,4 +30,12 @@ public interface WmUserControllerApi {
      */
     @ApiOperation("根据用户名查询自媒体用户")
     WmUser findByName(String name);
+
+    /**
+     * 查询自媒体用户信息
+     * @param id
+     * @return
+     */
+    @ApiOperation("查询自媒体用户信息")
+    public WmUser findWmUserById(@PathVariable Integer id);
 }

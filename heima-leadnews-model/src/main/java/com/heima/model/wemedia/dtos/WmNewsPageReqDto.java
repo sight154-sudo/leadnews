@@ -3,6 +3,8 @@ package com.heima.model.wemedia.dtos;
 import com.heima.model.common.dtos.PageRequestDto;
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * @author: tang
  * @date: Create in 19:24 2021/9/4
@@ -21,11 +23,11 @@ public class WmNewsPageReqDto extends PageRequestDto {
     /**
      * 起始时间
      */
-    private String beginPubDate;
+    private Date beginPubDate;
     /**
      * 截止时间
      */
-    private String endPubDate;
+    private Date endPubDate;
     /**
      * 状态
      */

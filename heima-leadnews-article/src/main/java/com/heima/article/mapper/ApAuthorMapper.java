@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.*;
  * @date: Create in 22:18 2021/8/30
  * @description:
  */
-public interface ArticleMapper {
+public interface ApAuthorMapper {
 
     /**
      * 根据id查询文章作者信息
@@ -34,4 +34,12 @@ public interface ArticleMapper {
      */
     @Update("update ap_author set wm_user_id = #{wmUserId}")
     int updateWmUserId(ApAuthor apAuthor);
+
+    /**
+     * 通过name查询文章作者信息
+     * @param name
+     * @return
+     */
+    @Select("select id,name,type,user_id userId,created_time createdTime,wm_user_id wmUserId from ap_author where name = #{name}")
+    ApAuthor findByName(String name);
 }

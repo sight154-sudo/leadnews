@@ -21,14 +21,41 @@ public interface AdSensitiveMapper {
      */
     List<AdSensitive> findAll(@Param("name") String name);
 
+    /**
+     * 保存敏感词信息
+     * @param adSensitive
+     * @return
+     */
     @Insert("insert into ad_sensitive(id,sensitives,created_time) values(#{id},#{sensitives},#{createdTime})")
     int save(AdSensitive adSensitive);
 
+    /**
+     * 修改敏感词信息
+     * @param adSensitive
+     * @return
+     */
     int update(AdSensitive adSensitive);
 
+    /**
+     * 通过id删除敏感词信息
+     * @param id
+     * @return
+     */
     @Delete("delete from ad_sensitive where id = #{id}")
     int delete(Integer id);
 
+    /**
+     * 通过Id查询敏感词信息
+     * @param id
+     * @return
+     */
     @Select("select id,sensitives,created_time createdTime from ad_sensitive where id = #{id}")
     AdSensitive findById(Integer id);
+
+    /**
+     * 查询所有敏感词
+     * @return
+     */
+    @Select("select sensitives from ad_sensitive")
+    List<String> findSensitive();
 }

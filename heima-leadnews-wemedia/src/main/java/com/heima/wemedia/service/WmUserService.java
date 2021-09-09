@@ -32,4 +32,11 @@ public interface WmUserService {
      * @return
      */
     ResponseResult login(WmUserDto dto);
+
+    /**
+     * 通过id查询自媒体用户信息
+     * @param id
+     * @return
+     */
+    WmUser findById(Integer id);
 }

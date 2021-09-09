@@ -3,6 +3,7 @@ package com.heima.wemedia.controller.v1;
 import com.heima.model.common.dtos.ResponseResult;
 import com.heima.model.wemedia.dtos.WmNewsDto;
 import com.heima.model.wemedia.dtos.WmNewsPageReqDto;
+import com.heima.model.wemedia.pojos.WmNews;
 import com.heima.wemedia.WmNewsControllerApi;
 import com.heima.wemedia.service.WmNewsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,4 +50,16 @@ public class WmNewsController implements WmNewsControllerApi {
     public ResponseResult downOrUp(@RequestBody WmNewsDto dto) {
         return wmNewsService.downOrUp(dto);
     }
+
+    @GetMapping("findOne/{id}")
+    @Override
+    public WmNews findById(@PathVariable Integer id) {
+        return wmNewsService.findById(id);
+    }
+    @PostMapping("update")
+    @Override
+    public ResponseResult updateWmNewsStatus(@RequestBody WmNews wmNews) {
+        return wmNewsService.updateWmNewsStatus(wmNews);
+    }
+
 }

@@ -71,7 +71,7 @@ public class WmUserServiceImpl implements WmUserService {
         if(ObjectUtil.isEmpty(wmUser)){
             return ResponseResult.errorResult(AppHttpCodeEnum.PARAM_INVALID);
         }
-        wmUser.setCreatedTime(DateUtil.now());
+        wmUser.setCreatedTime(new Date());
         int res = wmUserMapper.save(wmUser);
 //        int i = 1/0;
         return res!=0?ResponseResult.setAppHttpCodeEnum(AppHttpCodeEnum.SUCCESS):ResponseResult.errorResult(AppHttpCodeEnum.SAVE_FAILED);
@@ -85,5 +85,13 @@ public class WmUserServiceImpl implements WmUserService {
         return null;
     }
 
-
+    /**
+     * 通过id查询自媒体用户信息
+     * @param id
+     * @return
+     */
+    @Override
+    public WmUser findById(Integer id) {
+        return wmUserMapper.findById(id);
+    }
 }

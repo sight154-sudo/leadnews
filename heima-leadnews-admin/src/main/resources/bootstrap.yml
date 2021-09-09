@@ -10,11 +10,25 @@ spring:
       config:
         server-addr: 192.168.31.132:8848 #配置nacos配置中心
         file-extension: yml #配置文件的格式
+    alibaba:
+      seata:
+        tx-service-group: ${spring.application.name}_tx_group
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://192.168.31.132:3306/leadnews_admin?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
     username: root
     password: root
+  kafka:
+    consumer:
+      bootstrap-servers: 192.168.31.132:9092
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: ${spring.application.name}-kafka-group
+  #配置时间超时设置
+ribbon:
+    ConnectTimeout: 1000 # 连接超时时间 默认1s
+    ReadTimeout: 20000 # 逻辑处理的超时时间 默认1s
+#配置kafka消费者
 #mybatis:
 #  mapper-locations: classpath:mapper/*.xml
 #  type-aliases-package: com.heima.model.admin.pojos
@@ -23,3 +37,4 @@ spring:
 #  reasonable: true
 #  supportMethodsArguments: true
 #  params: count=countSql
+fdfs.url: http://120.27.131.73:8888/

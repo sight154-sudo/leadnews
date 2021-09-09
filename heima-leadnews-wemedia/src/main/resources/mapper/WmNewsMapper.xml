@@ -19,9 +19,9 @@
     </sql>
     <insert id="save" parameterType="com.heima.model.wemedia.pojos.WmNews" useGeneratedKeys="true" keyProperty="id">
         insert into wm_news(id,user_id,title,content,type,channel_id,labels,created_time,
-                            submited_time,status,publish_time,reason,article_id,images)
+                            submited_time,status,publish_time,reason,article_id,images,enable)
         values(null,#{userId},#{title},#{content},#{type},#{channelId},#{labels},#{createdTime},
-               #{submitedTime},#{status},#{publishTime},#{reason},#{articleId},#{images})
+               #{submitedTime},#{status},#{publishTime},#{reason},#{articleId},#{images},#{enable})
 
 
     </insert>
