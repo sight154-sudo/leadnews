@@ -1,9 +1,13 @@
 package com.heima.wemedia.service;
 
+import com.heima.model.admin.dtos.NewsAuthDto;
+import com.heima.model.common.dtos.PageResponseResult;
 import com.heima.model.common.dtos.ResponseResult;
 import com.heima.model.wemedia.dtos.WmNewsDto;
 import com.heima.model.wemedia.dtos.WmNewsPageReqDto;
 import com.heima.model.wemedia.pojos.WmNews;
+
+import java.util.List;
 
 /**
  * @author: tang
@@ -51,7 +55,7 @@ public interface WmNewsService {
      * @param wmNews
      * @return
      */
-    ResponseResult updateWmNewsStatus(WmNews wmNews);
+    ResponseResult updateWmNews(WmNews wmNews);
 
     /**
      * 通过id查询自媒体文章信息
@@ -59,4 +63,31 @@ public interface WmNewsService {
      * @return
      */
     WmNews findById(Integer id);
+
+    /**
+     * 查询可以发布的文章id
+     * @return
+     */
+    List<Integer> findRelease();
+
+    /**
+     * 查询文章信息并关联作者信息
+     * @param dto
+     * @return
+     */
+    PageResponseResult findListByDto(NewsAuthDto dto);
+
+    /**
+     * 查询单个文章的详情信息包含作者信息
+     * @param id
+     * @return
+     */
+    ResponseResult findOneAndAuthorNameById(Integer id);
+
+    /**
+     * 修改文章状态信息
+     * @param dto
+     * @return
+     */
+    ResponseResult updateWmNewsStatus(NewsAuthDto dto);
 }

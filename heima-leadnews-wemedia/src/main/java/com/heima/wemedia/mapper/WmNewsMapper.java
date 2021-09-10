@@ -1,5 +1,7 @@
 package com.heima.wemedia.mapper;
 
+import com.heima.model.admin.dtos.NewsAuthDto;
+import com.heima.model.admin.vo.NewsAuthVo;
 import com.heima.model.common.dtos.ResponseResult;
 import com.heima.model.wemedia.dtos.WmNewsDto;
 import com.heima.model.wemedia.dtos.WmNewsPageReqDto;
@@ -8,6 +10,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -78,4 +81,24 @@ public interface WmNewsMapper {
             "        </set>\n" +
             "        where id = #{id}</script>")
     int updateWmNewsStatus(WmNews wmNews);
+
+    /**
+     * 查询文章状态信息为4或8的文章
+     * @return
+     */
+    @Select("select id  from wm_news where status in(4,8) and publish_time < #{now}")
+    List<Integer> findRelease(Date now);
+
+    /**
+     * 查询状态为3的文章信息并包含作者信息
+     * @param dto
+     * @return
+     */
+    List<NewsAuthVo> findListByDto(NewsAuthDto dto);
+
+    /**
+     * 查询单个文章信息包含作者信息
+     */
+    @Select("select wn.*,wu.name from wm_news wn left join wm_user wu on wn.user_id = wu.id where wn.id = #{id}")
+    NewsAuthVo findOneById(Integer id);
 }

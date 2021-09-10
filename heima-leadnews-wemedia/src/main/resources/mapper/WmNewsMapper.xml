@@ -93,4 +93,15 @@
         </where>
         order by publish_time desc
     </select>
+    <select id="findListByDto" parameterType="com.heima.model.admin.dtos.NewsAuthDto" resultType="com.heima.model.admin.vo.NewsAuthVo">
+        select
+            wn.*,wu.name
+        from wm_news wn left join wm_user wu on wn.user_id = wu.id
+        where 1 = 1
+            <if test="title != null and title != ''">
+                and wn.title like '%${title}%'
+            </if>
+            and wn.status = 3
+        order by wn.publish_time
+    </select>
 </mapper>

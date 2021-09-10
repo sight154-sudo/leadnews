@@ -11,6 +11,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.heima.common.constants.message.NewsAutoScanConstants;
 import com.heima.common.constants.wemedia.WemediaContans;
+import com.heima.model.admin.dtos.NewsAuthDto;
+import com.heima.model.admin.vo.NewsAuthVo;
 import com.heima.model.common.dtos.PageResponseResult;
 import com.heima.model.common.dtos.ResponseResult;
 import com.heima.model.common.enums.AppHttpCodeEnum;
@@ -24,6 +26,7 @@ import com.heima.wemedia.mapper.WmMaterialMapper;
 import com.heima.wemedia.mapper.WmNewsMapper;
 import com.heima.wemedia.mapper.WmNewsMaterialMapper;
 import com.heima.wemedia.service.WmNewsService;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -391,7 +394,7 @@ public class WmNewsServiceImpl implements WmNewsService {
      */
     @Transactional
     @Override
-    public ResponseResult updateWmNewsStatus(WmNews wmNews) {
+    public ResponseResult updateWmNews(WmNews wmNews) {
         if(ObjectUtil.isEmpty(wmNews)){
             return ResponseResult.setAppHttpCodeEnum(AppHttpCodeEnum.PARAM_INVALID);
         }
@@ -407,5 +410,68 @@ public class WmNewsServiceImpl implements WmNewsService {
     @Override
     public WmNews findById(Integer id) {
         return wmNewsMapper.findById(id);
+    }
+
+    /**
+     * 查询文章状态为4 或8的文章信息
+     * @return
+     */
+    @Override
+    public List<Integer> findRelease() {
+        return wmNewsMapper.findRelease(new Date());
+    }
+
+    /**
+     * 查询文章信息并关联作者信息
+     * @param dto
+     * @return
+     */
+    @Override
+    public PageResponseResult findListByDto(NewsAuthDto dto) {
+        if(ObjectUtil.isEmpty(dto)){
+            return (PageResponseResult) PageResponseResult.errorResult(AppHttpCodeEnum.PARAM_INVALID);
+        }
+        //初始化分页参数
+        dto.checkParam();
+        PageHelper.startPage(dto.getPage(),dto.getSize());
+        List<NewsAuthVo> list = wmNewsMapper.findListByDto(dto);
+        PageInfo<NewsAuthVo> pageInfo = new PageInfo<>(list);
+        PageResponseResult result = new PageResponseResult(dto.getPage(),dto.getSize(),Convert.toInt(pageInfo.getTotal()));
+        result.setData(pageInfo.getList());
+        return result;
+    }
+
+    /**
+     * 查询审核媒体信息
+     * @param id
+     * @return
+     */
+    @Override
+    public ResponseResult findOneAndAuthorNameById(Integer id) {
+        if(ObjectUtil.isEmpty(id)){
+            return ResponseResult.setAppHttpCodeEnum(AppHttpCodeEnum.PARAM_INVALID);
+        }
+        NewsAuthVo vo = wmNewsMapper.findOneById(id);
+        return ResponseResult.okResult(vo);
+    }
+
+    /**
+     * 修改文章状态信息
+     * @param dto
+     * @return
+     */
+    @Override
+    public ResponseResult updateWmNewsStatus(NewsAuthDto dto) {
+        if(!ObjectUtil.isAllNotEmpty(dto,dto.getId(),dto.getStatus())){
+            return ResponseResult.setAppHttpCodeEnum(AppHttpCodeEnum.PARAM_INVALID);
+        }
+        WmNews wmNews = new WmNews();
+        wmNews.setStatus(dto.getStatus());
+        wmNews.setId(dto.getId());
+        if(StrUtil.isNotBlank(dto.getMsg())){
+            wmNews.setReason(dto.getMsg());
+        }
+        int res = wmNewsMapper.updateWmNewsStatus(wmNews);
+        return res !=0?ResponseResult.setAppHttpCodeEnum(AppHttpCodeEnum.SUCCESS):ResponseResult.setAppHttpCodeEnum(AppHttpCodeEnum.FAILED);
     }
 }

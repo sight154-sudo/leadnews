@@ -28,6 +28,12 @@ spring:
 ribbon:
     ConnectTimeout: 1000 # 连接超时时间 默认1s
     ReadTimeout: 20000 # 逻辑处理的超时时间 默认1s
+xxljob:
+  admin:
+    addresses: http://192.168.31.132:8881/xxl-job-admin
+  executor:
+    appname: leadnews-admin-executor
+    port: 9999
 #配置kafka消费者
 #mybatis:
 #  mapper-locations: classpath:mapper/*.xml
@@ -38,3 +44,6 @@ ribbon:
 #  supportMethodsArguments: true
 #  params: count=countSql
 fdfs.url: http://120.27.131.73:8888/
+logging:
+  level:
+    com.heima.admin.mapper: debug

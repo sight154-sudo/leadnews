@@ -17,6 +17,7 @@ import com.heima.model.article.pojos.ApArticle;
 import com.heima.model.article.pojos.ApArticleConfig;
 import com.heima.model.article.pojos.ApArticleContent;
 import com.heima.model.article.pojos.ApAuthor;
+import com.heima.model.wemedia.enumstatus.WmNewsStatusEnum;
 import com.heima.model.wemedia.pojos.WmNews;
 import com.heima.model.wemedia.pojos.WmUser;
 import com.heima.utils.common.SensitiveWordUtil;
@@ -136,7 +137,7 @@ public class WemediaNewsAutoScanServiceImpl implements WemediaNewsAutoScanServic
                 this.saveArticleContent(wmNews.getContent(),apArticle.getId());
             }
             //添加成功后，修改文章信息
-            wmNews.setStatus((short)9);
+            wmNews.setStatus(WmNewsStatusEnum.PUBLISHED.getCode());
             wmNews.setArticleId(apArticle.getId());
             wmNews.setReason("审核通过，已发布");
             this.wmNewsFeign.updateWmNews(wmNews);
@@ -318,6 +319,9 @@ public class WemediaNewsAutoScanServiceImpl implements WemediaNewsAutoScanServic
         apArticle.setImages(wmNews.getImages());
         apArticle.setTitle(wmNews.getTitle());
         apArticle.setCreatedTime(new Date());
+        apArticle.setPublishTime(wmNews.getPublishTime());
+        apArticle.setSyncStatus(false);
+        apArticle.setOrigin(0);
         ApArticle apArticle1 = articleFeign.saveArticle(apArticle);
         return apArticle1;
     }
