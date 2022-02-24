@@ -21,9 +21,13 @@ import com.heima.model.wemedia.enumstatus.WmNewsStatusEnum;
 import com.heima.model.wemedia.pojos.WmNews;
 import com.heima.model.wemedia.pojos.WmUser;
 import com.heima.utils.common.SensitiveWordUtil;
+import com.mysql.fabric.HashShardMapping;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.net.nntp.Article;
+import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -68,7 +72,6 @@ public class WemediaNewsAutoScanServiceImpl implements WemediaNewsAutoScanServic
      * 文章内容审核
      * @param id
      */
-
     @GlobalTransactional
     @Override
     public void autoScanByMediaNewsId(Integer id) {
@@ -125,6 +128,9 @@ public class WemediaNewsAutoScanServiceImpl implements WemediaNewsAutoScanServic
         saveAppArticle(wmNews);
     }
 
+    @Autowired
+    private RestHighLevelClient client;
+
     /**
      * 保存文章信息
      * @param wmNews
@@ -141,6 +147,16 @@ public class WemediaNewsAutoScanServiceImpl implements WemediaNewsAutoScanServic
             wmNews.setArticleId(apArticle.getId());
             wmNews.setReason("审核通过，已发布");
             this.wmNewsFeign.updateWmNews(wmNews);
+            //同步数据到es中
+            Map<String, Object> map = new HashMap<>();
+            map.put("authorId", apArticle.getAuthorId());
+            map.put("images", apArticle.getImages());
+            map.put("layout", apArticle.getLayout());
+            map.put("publishTime", apArticle.getPublishTime());
+            map.put("title", apArticle.getTitle());
+            map.put("content", wmNews.getContent());
+            IndexRequest indexRequest = new IndexRequest("app_info_article").id(apArticle.getId().toString()).source(map);
+            client.index(indexRequest, RequestOptions.DEFAULT);
         } catch (Exception e) {
             log.error("保存文章信息失败,文章id为{}",wmNews.getId(),e);
             throw  new RuntimeException("保存文章失败");

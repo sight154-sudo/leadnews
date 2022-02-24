@@ -1,6 +1,9 @@
 package com.heima.model.wemedia.pojos;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -11,6 +14,9 @@ import java.util.Date;
  * @description: 自媒体人用户表
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class WmUser implements Serializable {
     private Integer id;
     /**

@@ -16,7 +16,7 @@ public interface ApAuthorMapper {
      * @return
      */
     @Select("select id,name,type,user_id userId,created_time createdTime,wm_user_id wmUserId from ap_author where id = #{id}")
-    ApAuthor findByUserId(Integer id);
+    ApAuthor findById(Integer id);
 
     /**
      * 保存文章作者

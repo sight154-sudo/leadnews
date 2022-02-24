@@ -2,6 +2,7 @@ package com.heima.article.mapper;
 
 import com.heima.model.article.pojos.ApArticleContent;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * @author: tang
@@ -16,4 +17,7 @@ public interface ApArticleContentMapper {
      */
     @Insert("insert into ap_article_content values(#{id},#{articleId},#{content})")
     int saveApArticleContent(ApArticleContent apArticleContent);
+
+    @Select("select * from ap_article_content where article_id = #{articleId}")
+    ApArticleContent findByArticleId(Long articleId);
 }

@@ -25,9 +25,9 @@ public class ApAuthorServiceImpl implements ApAuthorService {
     private ApAuthorMapper articleMapper;
 
     @Override
-    public ApAuthor findByUserId(Integer id) {
+    public ApAuthor findById(Integer id) {
         if(null != id){
-            return articleMapper.findByUserId(id);
+            return articleMapper.findById(id);
         }
         return null;
     }

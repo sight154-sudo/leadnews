@@ -22,7 +22,7 @@ public interface ApAuthorControllerApi {
      * @return
      */
     @ApiOperation("根据用户id查询作者信息")
-    public ApAuthor findByUserId(@PathVariable("id") Integer id);
+    public ApAuthor findById(@PathVariable("id") Integer id);
 
     /**
      * 保存作者

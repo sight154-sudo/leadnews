@@ -97,7 +97,6 @@ public class ApUserRealnameImpl implements ApUserRealnameService {
     }
     /**
      * 保存自媒体用户信息和作者信息
-     *
      * @param userId
      * @return
      */
@@ -129,7 +128,7 @@ public class ApUserRealnameImpl implements ApUserRealnameService {
      * @return
      */
     private Boolean saveArticle(ApUser apUser) {
-        ApAuthor apAuthor = articleFeign.findByUserId(apUser.getId());
+        ApAuthor apAuthor = articleFeign.findById(apUser.getId());
         if (ObjectUtil.isEmpty(apAuthor)) {
             apAuthor = new ApAuthor();
             apAuthor.setName(apUser.getName());

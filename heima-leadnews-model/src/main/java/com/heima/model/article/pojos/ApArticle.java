@@ -1,5 +1,6 @@
 package com.heima.model.article.pojos;
 
+import com.heima.model.common.annotation.IdEncrypt;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,6 +13,7 @@ import java.util.Date;
  */
 @Data
 public class ApArticle implements Serializable {
+    @IdEncrypt
     private Long id;
     /**
      * 文章标题

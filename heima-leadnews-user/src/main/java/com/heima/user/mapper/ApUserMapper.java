@@ -23,6 +23,16 @@ public interface ApUserMapper {
 
 
     /**
+     * 根据手机号查询用户信息
+     * @param phone
+     * @return
+     */
+    @Select("select id,salt,name,password,phone,image,sex,is_certification isCertification," +
+            "is_identity_authentication isIdentityAuthentication,status,flag,created_time createdTime" +
+            " from ap_user where phone = #{phone}")
+    ApUser findByPhone(String phone);
+
+    /**
      * 修改用户所属分类
      * @param apUser
      * @return

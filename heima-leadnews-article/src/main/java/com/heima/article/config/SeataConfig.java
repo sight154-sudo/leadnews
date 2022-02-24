@@ -9,6 +9,6 @@ import org.springframework.context.annotation.Configuration;
  * @description:
  */
 @Configuration
-@ComponentScan("com.heima.seata.config")
+//@ComponentScan("com.heima.seata.config")
 public class SeataConfig {
 }

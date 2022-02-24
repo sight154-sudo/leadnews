@@ -15,9 +15,19 @@ import org.springframework.web.bind.annotation.RequestBody;
  */
 @FeignClient("leadnews-article")
 public interface ArticleFeign {
-    @GetMapping("/api/v1/author/findByUserId/{id}")
-    ApAuthor findByUserId(@PathVariable Integer id);
+    /**
+     * 根据用户id查询作者信息
+     * @param id
+     * @return
+     */
+    @GetMapping("/api/v1/author/findById/{id}")
+    ApAuthor findById(@PathVariable Integer id);
 
+    /**
+     * 保存作者信息
+     * @param apAuthor
+     * @return
+     */
     @PostMapping("/api/v1/author/save")
     ResponseResult save(@RequestBody ApAuthor apAuthor);
 }

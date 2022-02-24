@@ -16,7 +16,7 @@ public interface ApAuthorService {
      * @param id
      * @return
      */
-    ApAuthor findByUserId(Integer id);
+    ApAuthor findById(Integer id);
 
     /**
      * 保存作者

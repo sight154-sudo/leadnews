@@ -1,0 +1,38 @@
+server:
+  port: 9007
+spring:
+  application:
+    name: leadnews-search
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.31.132:8848
+      config:
+        server-addr: 192.168.31.132:8848
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.31.132:3306/leadnews_search?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: root
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.heima.model.search.pojos
+  datacenter-id: 1
+  workerId: 1
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+#取消对elastsearch的健康检查
+management:
+  health:
+    elasticsearch:
+      enabled: false
+#自定义es连接信息
+elasticsearch:
+  host: 192.168.31.132
+  port: 9200

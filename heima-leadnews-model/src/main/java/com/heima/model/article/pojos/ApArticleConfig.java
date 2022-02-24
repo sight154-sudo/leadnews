@@ -1,5 +1,6 @@
 package com.heima.model.article.pojos;
 
+import com.heima.model.common.annotation.IdEncrypt;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -14,10 +15,12 @@ public class ApArticleConfig implements Serializable {
     /**
      *主键id
      */
+    @IdEncrypt
     private Long id;
     /**
      * 文章id
      */
+    @IdEncrypt
     private Long articleId;
     /**
      * 是否评论

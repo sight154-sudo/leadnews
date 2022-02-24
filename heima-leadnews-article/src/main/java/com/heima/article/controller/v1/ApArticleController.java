@@ -4,10 +4,7 @@ import com.heima.article.ApArticleControllerApi;
 import com.heima.article.service.ApArticleService;
 import com.heima.model.article.pojos.ApArticle;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author: tang
@@ -30,6 +27,18 @@ public class ApArticleController implements ApArticleControllerApi {
     @PostMapping("/save")
     @Override
     public ApArticle saveArticle(@RequestBody ApArticle apArticle) {
+
         return apArticleService.saveArticle(apArticle);
+    }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("findOne")
+    @Override
+    public ApArticle findById(@RequestParam("id") Long id) {
+        return apArticleService.findById(id);
     }
 }

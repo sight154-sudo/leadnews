@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.heima.common.constants.message.NewsAutoScanConstants;
+import com.heima.common.constants.message.WmNewsMessageConstants;
 import com.heima.common.constants.wemedia.WemediaContans;
 import com.heima.model.admin.dtos.NewsAuthDto;
 import com.heima.model.admin.vo.NewsAuthVo;
@@ -35,10 +36,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -380,8 +378,19 @@ public class WmNewsServiceImpl implements WmNewsService {
         }
         //查询文章详情信息
         WmNews wmNews = wmNewsMapper.findById(dto.getId());
+        if(ObjectUtil.isEmpty(wmNews)){
+            return ResponseResult.setAppHttpCodeEnum(AppHttpCodeEnum.DATA_NOT_EXIST);
+        }
         if(!wmNews.getStatus().equals(WemediaContans.WM_ALREADY_PUBLISHED)){
             return ResponseResult.errorResult(AppHttpCodeEnum.FAILED,"文章还未发布");
+        }
+        //异步修改文章配置信息
+        if(ObjectUtil.isNotEmpty(wmNews.getEnable())){
+            //修改发布文章的配置信息
+            Map<String,Object> map = new HashMap();
+            map.put("enable",wmNews.getEnable());
+            map.put("articleId",wmNews.getArticleId());
+            kafkaTemplate.send(WmNewsMessageConstants.WM_NEWS_UP_OR_DOWN_TOPIC,JSON.toJSONString(map));
         }
         wmNewsMapper.updateEnableById(dto.getId(),dto.getEnable());
         return ResponseResult.setAppHttpCodeEnum(AppHttpCodeEnum.SUCCESS);

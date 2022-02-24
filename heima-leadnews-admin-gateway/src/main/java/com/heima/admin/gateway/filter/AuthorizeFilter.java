@@ -67,7 +67,7 @@ public class AuthorizeFilter implements GlobalFilter, Ordered {
                     httpHeaders.add("userId", id + "");
                 }).build();
                 //添加到请求中
-                exchange.mutate().request(serverHttpRequest).build();
+                 exchange.mutate().request(serverHttpRequest).build();
             }
         } catch (Exception e) {
             log.error("token解析失败；",e);

@@ -1,0 +1,20 @@
+server:
+  port: 9006
+spring:
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
+  application:
+    name: leadnews-comment
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.31.132:8848
+  data:
+    mongodb:
+      authentication-database: admin
+      host: 192.168.31.132
+      port: 27017
+      username: root
+      password: root
+      database: leadnews-comment
+fdfs.url: http://120.27.131.73:8888/

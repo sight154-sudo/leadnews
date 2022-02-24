@@ -26,10 +26,10 @@ public class ApAuthorController implements ApAuthorControllerApi {
      * @param id
      * @return
      */
-    @GetMapping("/findByUserId/{id}")
+    @GetMapping("/findById/{id}")
     @Override
-    public ApAuthor findByUserId(@PathVariable Integer id) {
-        return articleService.findByUserId(id);
+    public ApAuthor findById(@PathVariable Integer id) {
+        return articleService.findById(id);
     }
 
     /**

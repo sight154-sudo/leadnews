@@ -21,21 +21,21 @@ public class ExceptionCatch {
     @ExceptionHandler(BusinessException.class)
     @ResponseBody
     public ResponseResult doBusinessException(BusinessException e){
-        log.error("catch exception{}",e.getMessage());
+        log.error("catch exception{}",e);
         return ResponseResult.errorResult(AppHttpCodeEnum.SERVER_ERROR);
     }
 
     @ExceptionHandler({SystemException.class})
     @ResponseBody
     public ResponseResult doSystemException(SystemException e){
-        log.error("catch exception{}",e.getMessage());
+        log.error("catch exception{}",e);
         return ResponseResult.errorResult(AppHttpCodeEnum.SERVER_ERROR);
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public ResponseResult doException(Exception e){
-        log.error("catch exception{}",e.getMessage());
+        log.error("catch exception{}",e);
         return ResponseResult.errorResult(AppHttpCodeEnum.SERVER_ERROR);
     }
 }
